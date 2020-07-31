@@ -31,7 +31,7 @@
     </div>
 
     <div class="boxNews">
-        <h3 class="globalTitle"><a href="#">Tin mới nhất</a></h3>
+        <h3 class="globalTitle"><a href="#">Bài mới nhất</a></h3>
         <div class="listNews clearFix">
             @foreach ($latestNews as $latestNew)
                 <div class="item">
