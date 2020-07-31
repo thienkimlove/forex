@@ -44,6 +44,7 @@ class PostCrudController extends CrudController
         CRUD::column('title')->label('Tiêu đề');
         CRUD::column('category')->type('relationship')->label('Chuyên mục');
         CRUD::column('views')->type('number')->label('Lượt xem');
+        CRUD::column('index_slide')->type('boolean')->label('Trang chủ?');
         CRUD::column('status')->type('boolean')->label('Trạng thái');
         CRUD::column('image')->type('image')->label('Ảnh')->height('30px')->width('30px');
 
@@ -88,6 +89,7 @@ class PostCrudController extends CrudController
         CRUD::field('desc')->type('textarea')->label('Mô tả');
         CRUD::field('content')->type('ckeditor')->label('Nội dung');
         CRUD::field('image')->type('browse')->label('Ảnh');
+        CRUD::field('index_slide')->type('boolean')->label('Xuất hiện tại Slider Trang chủ');
         CRUD::field('status')->type('boolean')->label('Trạng thái');
 
         /**

@@ -44,34 +44,34 @@
             </a>
         </h1>
         <ul id="globalNav" class="pc">
-            <li><a href="/" class="active">Trang chủ</a></li>
-            <li><a href="/">VITAMIN C<br>TỰ NHIÊN</a></li>
+            <li><a href="{{ url('/') }}" class="{{ isset($page) && $page == 'index' ? 'active' : '' }}">Trang chủ</a></li>
+
+            @foreach (\App\Models\Category::whereNull('parent_id')->get() as $parentCategory)
+
             <li>
-                <a href="/">Vitamin C</a>
-                <ul>
-                    <li><a href="/">C NATTU</a></li>
-                    <li><a href="/">C NATTU KIDS</a></li>
-                </ul>
+                <a href="{{ url($parentCategory->slug) }}" class="{{ isset($page) && \App\Helpers::pActive($page, $parentCategory) ? 'active' : '' }}">{{ $parentCategory->name }}</a>
+
+                @if ($parentCategory->subCategories->count() > 0)
+                    <ul>
+                        @foreach ($parentCategory->subCategories as $subCate)
+                            <li><a href="{{ url($subCate->slug) }}" class="{{ isset($page) && \App\Helpers::pActive($page, $subCate) ? 'active' : '' }}">{{ $subCate->name }}</a></li>
+                        @endforeach
+                    </ul>
+                @endif
             </li>
-            <li><a href="/">Tin tức</a></li>
-            <li>
-                <a href="/">GÓC MẸ <br>THÔNG THÁI</a>
-                <ul>
-                    <li><a href="">Bệnh trẻ thường gặp</a></li>
-                    <li><a href="">Dược liệu</a></li>
-                    <li><a href="">Nghiên cứu lâm sàng</a></li>
-                </ul>
-            </li>
-            <li><a href="/">Videos</a></li>
-            <li><a href="/">CÂU HỎI <br>THƯỜNG GẶP</a></li>
-            <li><a href="/">Liên hệ</a></li>
+
+            @endforeach
+
+            <li><a href="{{ url('lien-he') }}" class="{{ isset($page) && $page == 'lien-he' ? 'active' : '' }}">Liên hệ</a></li>
         </ul>
-        <a href="#" title="Menu" class="sp btnMenu" id="btnMenu">Menu</a>
+        <a href="javascript:void(0)" title="Menu" class="sp btnMenu" id="btnMenu">Menu</a>
     </div>
 </header>
 <!-- /endHeader -->
 
-@include('frontend.index_slider')
+@if (isset($page) && $page == 'index')
+    @include('frontend.index_slider')
+@endif
 
 <!-- /endboxSlidePage -->
 <section class="section mb0">
@@ -79,31 +79,7 @@
         <div class="contentLeft">
             @yield('content')
         </div>
-        <div class="contentRight">
-            <div class="boxVideo">
-                <h3 class="globalTitle">
-                    <a href="#">Góc Video</a>
-                </h3>
-                <div class="content">
-                    <iframe width="100%" height="250" src="https://www.youtube.com/embed/4QEmJ3sPHIg" frameborder="0" allowfullscreen></iframe>
-                    <ul class="listVideo">
-                        <li><a href="#">Giải đáp các thắc mắc của Mẹ trong quá  trình mang thai và chăm </a></li>
-                        <li><a href="#">Giải đáp các thắc mắc của Mẹ trong quá  trình mang thai và chăm </a></li>
-                        <li><a href="#">Giải đáp các thắc mắc của Mẹ trong quá  trình mang thai và chăm </a></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- /endVideo -->
-            <div class="boxSale">
-                <h3 class="globalTitle">
-                    <a href="#">Cộng đồng mẹ thông thái</a>
-                </h3>
-                <div class="Social">
-                    <div class="fb-page" data-href="https://www.facebook.com/tuelinh.vn" data-width="100%" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/tuelinh.vn"><a href="https://www.facebook.com/tuelinh.vn">Tuệ Linh</a></blockquote></div></div>
-                </div>
-            </div>
-            <!-- /endSale -->
-        </div>
+        @include('frontend.right')
     </div>
 </section>
 <!-- /endSection -->
@@ -121,12 +97,9 @@
             <div class="areaLink">
                 <ul class="listCategory clearFix">
                     <li><a href="#">Trang chủ</a></li>
-                    <li><a href="#">VITAMIN C TỰ NHIÊN</a></li>
-                    <li><a href="#">Vitamin C</a></li>
-                    <li><a href="#">TIN TỨC</a></li>
-                    <li><a href="#">GÓC MẸ THÔNG THÁI</a></li>
-                    <li><a href="#">Video</a></li>
-                    <li><a href="#">CÂU HỎI THƯỜNG GẶP</a></li>
+                    @foreach (\App\Models\Category::whereNull('parent_id')->get() as $parentCategory)
+                        <li><a href="{{ url($parentCategory->slug) }}">{{ $parentCategory->name }}</a></li>
+                     @endforeach
                     <li><a href="#">LIÊN HỆ</a></li>
                 </ul>
             </div>
@@ -134,9 +107,9 @@
     </div>
     <div class="copyRight">
         <div class="container">
-            <p class="copy">MỌI THÔNG TIN ĐỀU BẢN QUYỀN ĐỀU THUỘC VỀ CÔNG TY TNHH TUỆ LINH</p>
+            <p class="copy">MỌI THÔNG TIN ĐỀU BẢN QUYỀN ĐỀU THUỘC VỀ CÔNG TY TNHH HOA QUAN</p>
             <p class="address">
-                Tầng 5, Tòa nhà 29 T1 - Hoàng Đạo Thúy - Trung Hòa - Cầu Giấy - Hà Nội- Điện thoại: (04) 62824344 - Fax: 04.62824263
+                P 801A - Chung cư 197 Trần Phú - Hà Đông - Hà Nội- Điện thoại: 0903347191
             </p>
         </div>
     </div>

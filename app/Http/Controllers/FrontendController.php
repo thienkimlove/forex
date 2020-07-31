@@ -8,6 +8,7 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        return view('frontend.index');
+        $page = 'index';
+        return view('frontend.index', compact('page'));
     }
 }
